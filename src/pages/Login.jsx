@@ -40,7 +40,11 @@ export default function Login() {
           required />
         <button type="submit">Login</button>
       </form>
-      {error && <p style={{color: "red"}}>{error}</p>}
+      <p>
+        Don't have an account? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate("/register")}>Register</span>
+      </p>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Orders from "./pages/Orders";
 import DeliveryGuys from "./pages/DeliveryGuys";
+import Register from "./pages/Register";
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -14,6 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/dashboard"
           element={
