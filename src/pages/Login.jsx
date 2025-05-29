@@ -1,6 +1,8 @@
+import "./Login.css";
 import { useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -12,13 +14,37 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
     try {
       const res = await signInWithEmailAndPassword(auth, email, password);
-      const token = await res.user.getIdToken();
+      console.log(res.user);
+      const user = res.user;
+
+      // Get user data from Firestore
+      const userDocRef = doc(db, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (!userDoc.exists()) {
+        setError("User not found in database.");
+        return;
+      }
+
+      const userData = userDoc.data();
+
+      // Check if the role is admin
+      if (userData.role !== "admin") {
+        setError("Access denied. You are not an admin.");
+        return;
+      }
+
+      // Save token and redirect
+      const token = await user.getIdToken();
       localStorage.setItem("token", token);
       navigate("/dashboard");
+
     } catch (err) {
-      setError("Invalid credentials");
+      console.error(err);
+      setError("Invalid email or password.");
     }
   };
 
@@ -41,9 +67,14 @@ export default function Login() {
         <button type="submit">Login</button>
       </form>
       <p>
-        Don't have an account? <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate("/register")}>Register</span>
+        Don't have an account?{" "}
+        <span
+          style={{ color: "blue", cursor: "pointer" }}
+          onClick={() => navigate("/register")}
+        >
+          Register
+        </span>
       </p>
-
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
