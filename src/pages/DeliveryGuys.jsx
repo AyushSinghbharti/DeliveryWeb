@@ -9,6 +9,8 @@ import {
   orderBy
 } from "firebase/firestore";
 import { db } from "../firebase";
+import { ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const DeliveryGuys = () => {
   const [deliveryGuys, setDeliveryGuys] = useState([]);
@@ -20,6 +22,7 @@ const DeliveryGuys = () => {
   });
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   // Fetch delivery guys from Firestore
   const fetchDeliveryGuys = async () => {
@@ -108,9 +111,18 @@ const DeliveryGuys = () => {
       )}
 
       {/* Page Header */}
-      <div className="mb-10 text-center">
-        <h1 className="text-4xl font-bold text-gray-800">🚚 Delivery Management</h1>
-        <p className="text-gray-500 mt-1">Efficiently manage your delivery workforce</p>
+      <div className="mb-10 flex items-center gap-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-black-400 hover:text-teal-600 transition flex-1"
+          aria-label="Go back"
+        >
+          <ChevronLeft size={45} />
+        </button>
+        <div>
+          <h1 className="text-4xl font-bold text-gray-800">Delivery Management</h1>
+          <p className="text-gray-500 mt-1 text-right">Efficiently manage your delivery workforce</p>
+        </div>
       </div>
 
       {/* Form Section */}

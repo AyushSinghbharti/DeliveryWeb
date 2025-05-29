@@ -11,11 +11,14 @@ import {
   orderBy
 } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
+import { ChevronLeft } from "lucide-react";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [deliveryGuys, setDeliveryGuys] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     product_name: '',
     product_description: '',
@@ -121,9 +124,18 @@ const Orders = () => {
   return (
     <div className="flex flex-col min-h-screen w-full bg-gradient-to-br from-gray-900 via-gray-950 to-gray-900 text-white p-8">
       {/* Header */}
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold text-teal-400">📦 Order Management</h1>
-        <p className="text-gray-400 mt-2">Create and track delivery orders with ease</p>
+      <header className="mb-8 flex items-center gap-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-teal-400 hover:text-teal-600 transition"
+          aria-label="Go back"
+        >
+          <ChevronLeft size={32} />
+        </button>
+        <div>
+          <h1 className="text-4xl font-bold text-teal-400">📦 Order Management</h1>
+          <p className="text-gray-400 mt-1">Create and track delivery orders with ease</p>
+        </div>
       </header>
 
       {/* Main Grid */}
@@ -227,8 +239,8 @@ const Orders = () => {
                     <span className="font-medium text-white">{order.product_name}</span>
                     <span
                       className={`px-3 py-1 text-xs font-medium rounded-full ${order.status === "assigned"
-                          ? "bg-green-400 text-black"
-                          : "bg-red-400 text-black"
+                        ? "bg-green-400 text-black"
+                        : "bg-red-400 text-black"
                         }`}
                     >
                       {order.status}
