@@ -1,4 +1,4 @@
-import "./Register.css";
+// import "./Register.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -74,100 +74,99 @@ export default function Register() {
   };
 
   return (
-    <div className="register-container">
-      <h2>Create Account</h2>
-      
-      <div className="register-form">
-        <div className="form-group full-width">
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-4">
+    <div className="w-full max-w-2xl bg-gray-800 rounded-2xl shadow-2xl p-8 space-y-6 animate-fadeIn">
+      <h2 className="text-3xl font-bold text-center text-teal-400">Create Delivery Account</h2>
+
+      <div className="space-y-4">
+        <input 
+          placeholder="Full Name"
+          className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          disabled={loading}
+        />
+
+        <input 
+          placeholder="Email Address" 
+          type="email"
+          className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          disabled={loading}
+        />
+
+        <input 
+          placeholder="Password (min 6 characters)" 
+          type="password" 
+          className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          disabled={loading}
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <input 
-            placeholder="Full Name" 
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            placeholder="Phone Number" 
+            type="tel"
+            className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            disabled={loading}
+          />
+
+          <input 
+            placeholder="Age" 
+            type="number"
+            min="1"
+            max="120"
+            className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+            value={form.age}
+            onChange={(e) => setForm({ ...form, age: e.target.value })}
             disabled={loading}
           />
         </div>
 
-        <div className="form-group full-width">
-          <input 
-            placeholder="Email Address" 
-            type="email"
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
+        <input 
+          placeholder="Full Address"
+          className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-400"
+          value={form.address}
+          onChange={(e) => setForm({ ...form, address: e.target.value })}
+          disabled={loading}
+        />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <select
+            className="w-full px-4 py-3 rounded-xl bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
+            value={form.gender}
+            onChange={(e) => setForm({ ...form, gender: e.target.value })}
             disabled={loading}
-          />
-        </div>
+          >
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
 
-        <div className="form-group full-width">
-          <input 
-            placeholder="Password (min 6 characters)" 
-            type="password" 
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          <select
+            className="w-full px-4 py-3 rounded-xl bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-teal-400"
+            value={form.role}
+            onChange={(e) => setForm({ ...form, role: e.target.value })}
             disabled={loading}
-          />
+          >
+            <option value="admin">Admin</option>
+          </select>
         </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <input 
-              placeholder="Phone Number" 
-              type="tel"
-              value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              disabled={loading}
-            />
+        {error && (
+          <div className="text-red-400 text-sm mt-2 text-center">
+            {error}
           </div>
+        )}
 
-          <div className="form-group">
-            <input 
-              placeholder="Age" 
-              type="number"
-              min="1"
-              max="120"
-              value={form.age}
-              onChange={(e) => setForm({ ...form, age: e.target.value })}
-              disabled={loading}
-            />
-          </div>
-        </div>
-
-        <div className="form-group full-width">
-          <input 
-            placeholder="Full Address" 
-            value={form.address}
-            onChange={(e) => setForm({ ...form, address: e.target.value })}
-            disabled={loading}
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-group">
-            <select 
-              value={form.gender}
-              onChange={(e) => setForm({ ...form, gender: e.target.value })}
-              disabled={loading}
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <select 
-              value={form.role}
-              onChange={(e) => setForm({ ...form, role: e.target.value })}
-              disabled={loading}
-            >
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-        </div>
-
-        {error && <div className="error">{error}</div>}
-
-        <button 
-          className={`register-button ${loading ? 'loading' : ''}`} 
+        <button
+          className={`w-full py-3 rounded-xl font-semibold text-white bg-teal-500 hover:bg-teal-600 transition-all duration-300 ${
+            loading && 'opacity-60 cursor-not-allowed'
+          }`}
           onClick={handleRegister}
           disabled={loading}
         >
@@ -175,10 +174,17 @@ export default function Register() {
         </button>
       </div>
 
-      <p className="login-link">
+      <p className="text-center text-sm text-gray-400">
         Already have an account?{" "}
-        <span onClick={() => navigate("/login")}>Login</span>
+        <span
+          onClick={() => navigate("/login")}
+          className="text-teal-400 cursor-pointer hover:underline"
+        >
+          Login
+        </span>
       </p>
     </div>
-  );
+  </div>
+);
+
 }

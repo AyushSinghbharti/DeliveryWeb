@@ -1,4 +1,3 @@
-import "./Login.css";
 import { useState } from "react";
 import { auth, db } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -49,33 +48,49 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container">
-      <h2>Admin Login</h2>
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required />
-        <button type="submit">Login</button>
-      </form>
-      <p>
-        Don't have an account?{" "}
-        <span
-          style={{ color: "blue", cursor: "pointer" }}
-          onClick={() => navigate("/register")}
-        >
-          Register
-        </span>
-      </p>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white px-4">
+      <div className="w-full max-w-md bg-gray-800 p-8 rounded-2xl shadow-2xl space-y-6 animate-fadeIn">
+        <h2 className="text-3xl font-bold text-center text-indigo-400">Admin Login</h2>
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full px-4 py-3 rounded-xl bg-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
+
+          <button
+            type="submit"
+            className="w-full py-3 rounded-xl font-semibold bg-indigo-500 hover:bg-indigo-600 transition duration-300"
+          >
+            Login
+          </button>
+        </form>
+
+        {error && <p className="text-red-400 text-center text-sm">{error}</p>}
+
+        <p className="text-center text-sm text-gray-400">
+          Don’t have an account?{" "}
+          <span
+            onClick={() => navigate("/register")}
+            className="text-indigo-400 cursor-pointer hover:underline"
+          >
+            Register
+          </span>
+        </p>
+      </div>
     </div>
   );
 }
